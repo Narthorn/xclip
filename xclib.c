@@ -348,10 +348,8 @@ xcin(Display * dpy,
 	}
     }
 
-    switch (*context) {
-    case XCLIB_XCIN_NONE:
-	if (evt.type != SelectionRequest)
-	    return (0);
+    switch (evt.type) {
+    case SelectionRequest:
 
 	/* set the window and property that is being used */
 	*win = evt.xselectionrequest.requestor;
@@ -425,12 +423,8 @@ xcin(Display * dpy,
 
 	break;
 
-    case XCLIB_XCIN_INCR:
+    case PropertyNotify:
 	/* length of current chunk */
-
-	/* ignore non-property events */
-	if (evt.type != PropertyNotify)
-	    return (0);
 
 	/* ignore the event unless it's to report that the
 	 * property has been deleted
